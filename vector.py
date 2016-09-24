@@ -15,6 +15,14 @@ class Vector3D:
         return Vector3D(newx, newy, newz)
     def __mul__(self, other): # умножение
         return Vector3D(self.x * other, self.y * other, self.z * other)
+    def __rmul__(self, other):
+        return Vector3D(self.x * other, self.y * other, self.z * other)
+    def __imul__(self, other): # переопределяем *=
+        self.x *= other
+        self.y *= other
+        self.z *= other
+        print("I was multyplied by {0}".format(other))
+        return self
     def __sub__(self, other): 
         return self + (other * (-1)) # использование ранее определенных операторов
     def __xor__(self, other): # self ^ other
@@ -29,3 +37,6 @@ class Vector3D:
     
 def tripleProduct(a, b, c):
     return a ^ (b & c)
+
+if __name__ == "__main__":
+    print("Это модуль для работы с трехмерным вектором")
