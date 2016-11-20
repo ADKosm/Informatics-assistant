@@ -28,25 +28,26 @@ int main(int argc, const char *argv[])
         return 0;
     }
 
-    std::vector<Elective> intervals(n);
+    std::vector<Elective> electives(n);
     for (size_t i = 0; i != n; ++i)
-        std::cin >> intervals[i].start >> intervals[i].finish >> intervals[i].credits;
+        std::cin >> electives[i].start >> electives[i].finish >> electives[i].credits;
 
-    std::sort(intervals.begin(), intervals.end());
+    std::sort(electives.begin(), electives.end());
 
     std::vector<int> maxCredits(n);
-    maxCredits[n-1] = intervals[n-1].credits;
+    maxCredits[n-1] = electives[n-1].credits;
 
     for (int i = n - 2; i >= 0; --i) {
-        int current_finish = intervals[i].finish;
-        auto next = std::lower_bound(intervals.begin(), intervals.end(), current_finish); // находим подходящий отрезок
+        int current_finish = electives[i].finish;
+        auto next = std::lower_bound(electives.begin(), electives.end(), current_finish); // находим подходящий отрезок
 
-        if (next == intervals.end()) { // Не нашлось
-            maxCredits[i] = std::max(maxCredits[i + 1], intervals[i].credits);
+        if (next == electives.end()) { // Не нашлось
+            maxCredits[i] = std::max(maxCredits[i + 1], electives[i].credits);
         } else {
-            maxCredits[i] = std::max(maxCredits[i + 1], intervals[i].credits + maxCredits[std::distance(intervals.begin(), next)]);
+            maxCredits[i] = std::max(maxCredits[i + 1], electives[i].credits + maxCredits[std::distance(electives.begin(), next)]);
         }
     }
     std::cout << maxCredits[0] << std::endl;
     return 0;
 }
+
